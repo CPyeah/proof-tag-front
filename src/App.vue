@@ -2,40 +2,32 @@
   <v-app>
     <v-main>
       <v-container class="main-container">
-        <div class="header">
-          <v-img
-            src="https://hatscripts.github.io/circle-flags/flags/cn.svg"
-            class="flag"
-            contain
-          ></v-img>
-        </div>
-        <div class="content">
-          <v-card class="card">
-            <h1 class="card-title">请填写控制字段</h1>
-            <p class="code">验证码：FEU10AAAA19569</p>
-            <h3>CCP</h3>
-            <p class="instruction">
-              5个字母数字字符（要求一个数字，一个小字母和一个大写字母）或（要求一个数字和一个字母）。
-            </p>
-            <input type="text" class="input-field" placeholder="XXXXX">
-            <v-btn >Check</v-btn>
-          </v-card>
-        </div>
+        <router-view />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import HomeView from './views/HomeView.vue';
+import ValidateView from './views/ValidateView.vue';
+import SuccessView from './views/SuccessView.vue';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    HomeView,
+    ValidateView,
+    SuccessView
+  },
 }
 </script>
 
 <style>
 .main-container {
   text-align: center;
-  margin-top: 5px;
+  margin-top: 0px;
+  padding: 0px;
 }
 
 .header {
