@@ -9,16 +9,10 @@
 </template>
 
 <script>
-import HomeView from './views/HomeView.vue';
-import ValidateView from './views/ValidateView.vue';
-import SuccessView from './views/SuccessView.vue';
 
 export default {
   name: 'App',
   components: {
-    HomeView,
-    ValidateView,
-    SuccessView
   },
 }
 </script>
