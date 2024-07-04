@@ -13,12 +13,12 @@
           <div class="content">
             <v-card class="card">
               <h1 class="card-title">请填写控制字段</h1>
-              <p class="code">验证码：FEU10AAAA19569</p>
+              <p class="code">验证码：{{ CID }}</p>
               <h3>CCP</h3>
               <p class="instruction">
                 5个字母数字字符（要求一个数字，一个小字母和一个大写字母）或（要求一个数字和一个字母）。
               </p>
-              <input type="text" class="input-field" placeholder="XXXXX">
+              <input type="text" class="input-field" placeholder="XXXXX" v-model="code">
               <v-btn @click="handleSubmit">Check</v-btn>
             </v-card>
           </div>
@@ -29,19 +29,41 @@
   </template>
   
   <script>
-
+    import axios from 'axios'; // 引入 axios
     export default {
       name: 'ValidateView',
       data() {
         return {
-          inputValue: ''
+          code: '',
+          CID: ''
         };
+      },
+      mounted() {
+        this.CID = this.$route.query.CID || '';
       },
       methods: {
 
         async handleSubmit() {
+          if (!this.CID || !this.inputValue) {
+            alert('CID 和输入字段都不能为空');
+            return;
+          }
+          try {
+          const response = await axios.post('your-api-url', {
+            CID: this.CID,
+            inputValue: this.inputValue
+          });
 
-          this.$router.push('/success');
+          if (response.data.success) {
+            this.$router.push('/success');
+          } else {
+            alert('验证失败');
+          }
+        } catch (error) {
+          console.error(error);
+          alert('验证失败');
+        }
+      }
 
         }
       }
