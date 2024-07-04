@@ -44,30 +44,28 @@
       methods: {
 
         async handleSubmit() {
-          if (!this.CID || !this.inputValue) {
-            alert('CID 和输入字段都不能为空');
-            return;
-          }
-          try {
-          const response = await axios.post('your-api-url', {
-            CID: this.CID,
-            inputValue: this.inputValue
-          });
+            if (!this.CID || !this.inputValue) {
+              alert('CID 和输入字段都不能为空');
+              return;
+            }
+            try {
+            // http://localhost:8000/check?code=0RF9x&CID=OU6BX1QGNTSOMR
+            const response = await axios.get(`http://localhost:8000/check?code=${this.code}&CID=${this.CID}`);
 
-          if (response.data.success) {
-            this.$router.push('/success');
-          } else {
+            if (response.data.success) {
+              this.$router.push({ name: 'success', params: { responseData: response.data } });
+            } else {
+              alert('验证失败');
+            }
+          } catch (error) {
+            console.error(error);
             alert('验证失败');
           }
-        } catch (error) {
-          console.error(error);
-          alert('验证失败');
         }
-      }
 
         }
       }
-    };
+    
   </script>
   
   <style>

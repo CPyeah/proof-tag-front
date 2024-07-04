@@ -71,6 +71,16 @@
 <script>
 export default {
   name: 'SuccessView',
+  data() {
+    return {
+      responseData: {}
+    };
+  },
+  created() {
+    this.responseData = this.$route.params.responseData;
+    // log
+    console.log(this.responseData);
+  }
 }
 </script>
 
