@@ -30,7 +30,7 @@
         {{ responseData.CID }}
       </div>
       <div class="product-image" v-if="responseData && responseData.sku">
-        <v-img :src="responseData.sku.image" alt="FiberTag"/> 
+        <v-img :src="responseData.validate_image" alt="FiberTag"/> 
       </div>
       <div class="product-image product-image-card">
         <v-img src="../assets/ethereum.png" alt="Ethereum"/>
