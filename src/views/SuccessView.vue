@@ -27,10 +27,10 @@
         FiberTag®
       </div>
       <div class="verify">
-        FEU10AAAA19569
+        {{ responseData.CID }}
       </div>
-      <div class="product-image">
-        <v-img src="../assets/validate-img.png" alt="FiberTag"/>
+      <div class="product-image" v-if="responseData && responseData.sku">
+        <v-img :src="responseData.sku.image" alt="FiberTag"/> 
       </div>
       <div class="product-image product-image-card">
         <v-img src="../assets/ethereum.png" alt="Ethereum"/>
@@ -45,9 +45,9 @@
       <p style="margin-top: 20px;">基于稳定透明质酸，旨在进行皮肤重塑和治疗皮肤松弛，而不仅仅是填充皱纹和细纹。</p>
       <p style="margin-top: 20px;" class="check-desc">查看以下结果获得您的产品验证信息。</p>
       <ul style="margin-top: 20px;">
-        <li>防伪编号: FEU10AAAA19569</li>
-        <li>防伪激活日期: 19/03/2024</li>
-        <li>已验证次数: 0</li>
+        <li>防伪编号: {{ responseData.CID }}</li>
+        <li>防伪激活日期: {{ responseData.active_date_time }}</li>
+        <li>已验证次数: {{ responseData.check_count }}</li>
         <li>EAN 码:</li>
         <li>网站域名: prooftag.com</li>
       </ul>
@@ -76,10 +76,16 @@ export default {
       responseData: {}
     };
   },
-  created() {
-    this.responseData = this.$route.params.responseData;
-    // log
-    console.log(this.responseData);
+  mounted() {
+    if (this.$route.query.responseData) {
+      try {
+        const data = JSON.parse(this.$route.query.responseData);
+        console.log(data); // 现在你可以使用这个对象了
+        this.responseData = data;
+      } catch (error) {
+        console.error('解析 responseData 失败', error);
+      }
+    }
   }
 }
 </script>

@@ -44,16 +44,19 @@
       methods: {
 
         async handleSubmit() {
-            if (!this.CID || !this.inputValue) {
+            if (!this.CID || !this.code) {
               alert('CID 和输入字段都不能为空');
               return;
             }
             try {
-            // http://localhost:8000/check?code=0RF9x&CID=OU6BX1QGNTSOMR
-            const response = await axios.get(`http://localhost:8000/check?code=${this.code}&CID=${this.CID}`);
-
-            if (response.data.success) {
-              this.$router.push({ name: 'success', params: { responseData: response.data } });
+            // https://proof-tag-server.onrender.com/check?code=0RF9x&CID=OU6BX1QGNTSOMR
+            const response = await axios.get(`https://proof-tag-server.onrender.com/check?code=${this.code}&CID=${this.CID}`);
+            // console.log(response);
+            if (response.data.result == 0) {
+              // console.log(response.data.data);
+              response.data.data.CID = this.CID;
+              this.$router.push({ name: 'success', query: { responseData: JSON.stringify(response.data.data) } });
+              // this.$router.push({ name: 'success', params: { responseData: response.data.data. } });
             } else {
               alert('验证失败');
             }

@@ -17,7 +17,8 @@ const routes = [
   {
     path: '/success',
     name: 'success',
-    component: () => import('../views/SuccessView.vue')
+    component: () => import('../views/SuccessView.vue'),
+    props: true
   }
 ]
 
