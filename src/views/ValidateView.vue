@@ -15,7 +15,7 @@
                 5个字母数字字符（要求一个数字，一个小字母和一个大写字母）或（要求一个数字和一个字母）。
               </p>
               <input type="text" class="input-field" placeholder="XXXXX" v-model="code">
-              <v-btn @click="handleSubmit">Check</v-btn>
+              <v-btn :loading="isLoading" :disabled="isLoading" @click="handleSubmit">Check</v-btn>
             </v-card>
           </div>
         </div>
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       code: '',
-      CID: ''
+      CID: '',
+      isLoading: false // 控制按钮状态的变量
     };
   },
   created() {
@@ -47,6 +48,7 @@ export default {
         alert('CID 和输入字段都不能为空');
         return;
       }
+      this.isLoading = true; // 开始请求，按钮显示加载状态并禁用
       try {
         // https://proof-tag-server.onrender.com/check?code=0RF9x&CID=OU6BX1QGNTSOMR
         const response = await axios.get(`https://proof-tag-server.onrender.com/check?code=${this.code}&CID=${this.CID}`);
@@ -62,6 +64,8 @@ export default {
       } catch (error) {
         console.error(error);
         alert('验证失败');
+      } finally {
+        this.isLoading = false; // 请求结束，恢复按钮状态
       }
     },
 
