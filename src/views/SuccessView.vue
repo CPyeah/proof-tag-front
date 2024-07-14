@@ -30,7 +30,7 @@
         {{ responseData.CID }}
       </div>
       <div class="product-image" v-if="responseData && responseData.sku">
-        <v-img :src="responseData.validate_image" alt="FiberTag"/> 
+        <v-img :src="imageSrc" alt="FiberTag"/> 
       </div>
       <div class="product-image product-image-card">
         <v-img src="../assets/ethereum.png" alt="Ethereum"/>
@@ -73,7 +73,8 @@ export default {
   name: 'SuccessView',
   data() {
     return {
-      responseData: {}
+      responseData: {},
+      imageSrc: ''
     };
   },
   mounted() {
@@ -82,6 +83,8 @@ export default {
         const data = JSON.parse(this.$route.query.responseData);
         console.log(data); // 现在你可以使用这个对象了
         this.responseData = data;
+        // imageSrc = `../assets/check_images/${this.responseData.validate_image}`;
+        this.imageSrc = require(`@/assets/check_images/${this.responseData.validate_image}`)
       } catch (error) {
         console.error('解析 responseData 失败', error);
       }
